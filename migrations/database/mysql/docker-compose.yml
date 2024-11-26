@@ -1,0 +1,32 @@
+services:
+  db:
+    image: mysql:9.1.0
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: Root!23456
+      MYSQL_DATABASE: john-davis
+      MYSQL_USER: john-davis
+      MYSQL_PASSWORD: John-davis!23456
+    ports:
+      - "6033:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - mysql-phpmyadmin
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    links:
+      - db
+    environment:
+      PMA_HOST: mysql-container
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    ports:
+      - 8888:80
+    networks:
+      - mysql-phpmyadmin
+volumes:
+  dbdata:
+networks:
+  mysql-phpmyadmin:

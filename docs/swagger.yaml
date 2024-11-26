@@ -1,0 +1,87 @@
+definitions:
+  users.CreatedUserDTO:
+    properties:
+      email:
+        type: string
+      password:
+        minLength: 1
+        type: string
+      username:
+        maxLength: 50
+        minLength: 1
+        type: string
+    required:
+    - email
+    - password
+    - username
+    type: object
+  users.UserDetailDTO:
+    properties:
+      email:
+        type: string
+      password:
+        minLength: 1
+        type: string
+      username:
+        maxLength: 50
+        minLength: 1
+        type: string
+    required:
+    - email
+    - password
+    - username
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/users:
+    post:
+      consumes:
+      - application/json
+      description: Create user
+      parameters:
+      - description: User information for creating user
+        in: body
+        name: json
+        required: true
+        schema:
+          $ref: '#/definitions/users.CreatedUserDTO'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/users.CreatedUserDTO'
+        "400":
+          description: error
+      summary: Create user
+  /api/v1/users/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Create user
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: "1"
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/users.UserDetailDTO'
+        "400":
+          description: error
+      security:
+      - BearerAuth: []
+      summary: Create user
+swagger: "2.0"
