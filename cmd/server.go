@@ -1,12 +1,14 @@
-package commands
+package cmd
 
 import (
 	"fmt"
-	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
+	"os"
+
 	"golang-project-layout/infra"
 	"golang-project-layout/servers"
-	"os"
+
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 func LoadConfig(path string) *infra.AppConfig {

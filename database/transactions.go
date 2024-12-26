@@ -1,7 +1,8 @@
-package db_helpers
+package database
 
 import (
 	"errors"
+
 	"gorm.io/gorm"
 )
 

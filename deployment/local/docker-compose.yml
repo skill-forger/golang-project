@@ -10,9 +10,10 @@ services:
     ports:
       - "6033:3306"
     volumes:
-      - dbdata:/var/lib/mysql
+      - mysql-data:/var/lib/mysql
     networks:
       - mysql-phpmyadmin
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
@@ -26,7 +27,9 @@ services:
       - 8888:80
     networks:
       - mysql-phpmyadmin
+
 volumes:
-  dbdata:
+  mysql-data:
+
 networks:
   mysql-phpmyadmin:
