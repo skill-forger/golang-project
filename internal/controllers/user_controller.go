@@ -1,13 +1,15 @@
-package users
+package controllers
 
 import (
 	"context"
 	"github.com/labstack/echo/v4"
+	"golang-project-layout/internal/dtos"
+	"golang-project-layout/internal/models"
 	"net/http"
 )
 
 type UserSvc interface {
-	CreateUser(ctx context.Context, userDTO CreatedUserDTO) (User, error)
+	CreateUser(ctx context.Context, userDTO dtos.CreatedUserDTO) (models.User, error)
 }
 
 type UserCtrl interface {
@@ -50,7 +52,7 @@ func (ctrl *UserCtrlImpl) CreateUser(c echo.Context) error {
 func (ctrl *UserCtrlImpl) GetUser(c echo.Context) error {
 	id := c.Param("id")
 
-	return c.JSON(http.StatusOK, UserDetailDTO{
+	return c.JSON(http.StatusOK, dtos.UserDetailDTO{
 		Username: "username" + id,
 		Email:    "email@gmail.com",
 		Password: "emailQwe123!@#",

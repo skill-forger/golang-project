@@ -2,13 +2,68 @@ package servers
 
 import (
 	"context"
+	"fmt"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"github.com/spf13/viper"
 	"github.com/swaggo/echo-swagger"
-	"golang-project-layout/infra"
-	"golang-project-layout/v1/users"
+	"golang-project-layout/config"
+	"golang-project-layout/database"
+	"golang-project-layout/internal/controllers"
+	"golang-project-layout/internal/repositories"
+	"golang-project-layout/internal/services"
+	"log"
 	"net/http"
+	"time"
 )
+
+type DataBaseConfig interface {
+}
+
+func NewAppConfig() *config.AppConfig {
+	appConfig := config.AppConfig{}
+
+	// config server
+	appConfig.ServerPort = viper.GetString("SERVER_PORT")
+
+	// config gorm
+	gormConfig := database.NewDefaultConfig()
+	maxOpenConnections := viper.GetInt("MAX_OPEN_CONNECTIONS")
+	maxIdleConnections := viper.GetInt("MAX_IDLE_CONNECTIONS")
+	gormConfig.MaxOpenConnections = maxOpenConnections
+	gormConfig.MaxIdleConnections = maxIdleConnections
+	gormConfig.ConnectionMaxTime = time.Hour * 99999
+	gormConfig.ConnectionIdleTime = time.Hour * 99999
+	appConfig.GormConfig = gormConfig
+
+	// config database
+	dbHost := viper.GetString("DB_HOST")
+	dbUser := viper.GetString("DB_USER")
+	dbPassword := viper.GetString("DB_PASSWORD")
+	dbName := viper.GetString("DB_NAME")
+	dbPort := viper.GetInt("DB_PORT")
+	dbConn := database.NewDBConn(fmt.Sprintf("%[1]s:%[2]s@tcp(%[3]s:%[4]d)/%[5]s?charset=utf8mb4&parseTime=True&loc=Local",
+		dbUser,     // 1
+		dbPassword, // 2
+		dbHost,     // 3
+		dbPort,     // 4
+		dbName,     // 5
+	), &appConfig)
+
+	appConfig.DB = dbConn
+
+	_, err := dbConn.Open()
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	err = dbConn.Ping()
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	return &appConfig
+}
 
 type UserSvc interface {
 	CreateUser(ctx context.Context) error
@@ -33,7 +88,7 @@ type UserSvc interface {
 
 // @host localhost:8080
 // @BasePath /api/v1
-func InitServer(app *infra.AppConfig) {
+func InitServer(app *config.AppConfig) {
 	e := echo.New()
 	db, err := app.DB.Instance()
 	if err != nil {
@@ -46,31 +101,27 @@ func InitServer(app *infra.AppConfig) {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-	userRepo := users.NewUserRepo()
-	userSvc := users.NewUserSvc(db, userRepo)
-	userCtrl := users.NewUserCtrl(userSvc)
+	userRepo := repositories.NewUserRepo()
+	userSvc := services.NewUserSvc(db, userRepo)
+	userCtrl := controllers.NewUserCtrl(userSvc)
 
 	apiGroup := e.Group("/api")
-	v1Group := apiGroup.Group("/v1")
 
 	// healthcheck
-	v1Group.GET("/health", func(c echo.Context) error {
+	apiGroup.GET("/health", func(c echo.Context) error {
 		return c.String(http.StatusOK, "OK")
 	})
 
 	// non authenticated, authorized routes
 	// users
-	usersGroup := v1Group.Group("/users")
+	usersGroup := apiGroup.Group("/users")
 	{
 		usersGroup.POST("", userCtrl.CreateUser)
+		usersGroup.GET("/:id", userCtrl.GetUser)
 	}
 
-	// jwt
-	e.Use()
-
-	// authenticated, authorized routes
-	// users APIs
-	users.RegisterUsersRoutes(usersGroup, userCtrl)
+	// authentication, authorization middlewares
+	//e.Use()
 
 	e.Logger.Fatal(e.Start(app.ServerPort))
 }

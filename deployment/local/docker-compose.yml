@@ -11,25 +11,25 @@ services:
       - "6033:3306"
     volumes:
       - mysql-data:/var/lib/mysql
-    networks:
-      - mysql-phpmyadmin
+#    networks:
+#      - mysql-phpmyadmin
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
-    links:
-      - db
-    environment:
-      PMA_HOST: mysql-container
-      PMA_PORT: 3306
-      PMA_ARBITRARY: 1
-    ports:
-      - 8888:80
-    networks:
-      - mysql-phpmyadmin
+#  phpmyadmin:
+#    image: phpmyadmin/phpmyadmin
+#    container_name: phpmyadmin
+#    links:
+#      - db
+#    environment:
+#      PMA_HOST: mysql-container
+#      PMA_PORT: 3306
+#      PMA_ARBITRARY: 1
+#    ports:
+#      - 8888:80
+#    networks:
+#      - mysql-phpmyadmin
 
 volumes:
   mysql-data:
-
-networks:
-  mysql-phpmyadmin:
+#
+#networks:
+#  mysql-phpmyadmin:

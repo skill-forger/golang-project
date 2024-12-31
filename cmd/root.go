@@ -1,6 +1,10 @@
 package cmd
 
 import (
+	"fmt"
+	"github.com/spf13/viper"
+	"golang-project-layout/config"
+	"golang-project-layout/servers"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -37,4 +41,36 @@ func init() {
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+}
+
+func NewServerCommand() *cobra.Command {
+	command := &cobra.Command{
+		Use:   "server",
+		Short: "Start the server",
+
+		Run: func(cmd *cobra.Command, args []string) {
+			serverEnv := os.Getenv("SERVER_ENV")
+			var app *config.AppConfig
+			if serverEnv == "dev" {
+				app = LoadConfig(".")
+			}
+
+			servers.InitServer(app)
+		},
+	}
+
+	return command
+}
+
+func LoadConfig(path string) *config.AppConfig {
+	viper.AddConfigPath(path)
+	viper.SetConfigFile("dev.env")
+
+	err := viper.ReadInConfig()
+	if err != nil {
+		panic(fmt.Errorf("fatal error config file: %w", err))
+	}
+	viper.AutomaticEnv()
+
+	return servers.NewAppConfig()
 }
