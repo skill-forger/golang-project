@@ -1,18 +1,14 @@
 package database
 
 import (
-	"errors"
-	"golang-project-layout/config"
-	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
 	"log"
 	"os"
 	"time"
-)
 
-var (
-	ErrMissingConfig         = errors.New("database config is missing")
-	ErrUninitializedDatabase = errors.New("database instance is not initialized")
+	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
+
+	"golang-project-layout/config"
 )
 
 func NewDefaultConfig() *config.GormConfig {

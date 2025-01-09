@@ -2,12 +2,13 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/spf13/viper"
-	"golang-project-layout/config"
-	"golang-project-layout/servers"
 	"os"
 
+	"golang-project-layout/config"
+	"golang-project-layout/server"
+
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -15,8 +16,6 @@ var rootCmd = &cobra.Command{
 	Use:   "go run cmd/main",
 	Short: "A brief description",
 	Long:  `A longer description`,
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
 	},
 }
@@ -55,7 +54,7 @@ func NewServerCommand() *cobra.Command {
 				app = LoadConfig(".")
 			}
 
-			servers.InitServer(app)
+			server.InitServer(app)
 		},
 	}
 
@@ -72,5 +71,5 @@ func LoadConfig(path string) *config.AppConfig {
 	}
 	viper.AutomaticEnv()
 
-	return servers.NewAppConfig()
+	return server.NewAppConfig()
 }

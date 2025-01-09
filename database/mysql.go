@@ -1,10 +1,11 @@
 package database
 
 import (
-	"golang-project-layout/config"
-	"golang-project-layout/statics"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+
+	"golang-project-layout/config"
+	"golang-project-layout/static"
 )
 
 type connection struct {
@@ -23,7 +24,7 @@ func (c *connection) DataSourceName() string {
 
 func (c *connection) Open() (*gorm.DB, error) {
 	if c.appConfig == nil {
-		return nil, statics.ErrNoAppConfig
+		return nil, static.ErrNoAppConfig
 	}
 
 	var err error
@@ -56,7 +57,7 @@ func (c *connection) Open() (*gorm.DB, error) {
 
 func (c *connection) Close() error {
 	if c.instance == nil {
-		return statics.ErrUninitializedDatabase
+		return static.ErrUninitializedDatabase
 	}
 
 	gormDb, err := c.instance.DB()
@@ -69,7 +70,7 @@ func (c *connection) Close() error {
 
 func (c *connection) Instance() (*gorm.DB, error) {
 	if c.instance == nil {
-		return nil, statics.ErrUninitializedDatabase
+		return nil, static.ErrUninitializedDatabase
 	}
 
 	return c.instance, nil

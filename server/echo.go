@@ -1,20 +1,22 @@
-package servers
+package server
 
 import (
 	"context"
 	"fmt"
+	"log"
+	"net/http"
+	"time"
+
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/spf13/viper"
 	"github.com/swaggo/echo-swagger"
+
 	"golang-project-layout/config"
 	"golang-project-layout/database"
-	"golang-project-layout/internal/controllers"
-	"golang-project-layout/internal/repositories"
-	"golang-project-layout/internal/services"
-	"log"
-	"net/http"
-	"time"
+	"golang-project-layout/internal/handler"
+	"golang-project-layout/internal/repository"
+	"golang-project-layout/internal/service"
 )
 
 type DataBaseConfig interface {
@@ -101,9 +103,9 @@ func InitServer(app *config.AppConfig) {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-	userRepo := repositories.NewUserRepo()
-	userSvc := services.NewUserSvc(db, userRepo)
-	userCtrl := controllers.NewUserCtrl(userSvc)
+	userRepo := repository.NewUserRepo()
+	userSvc := service.NewUserSvc(db, userRepo)
+	userCtrl := handler.NewUserCtrl(userSvc)
 
 	apiGroup := e.Group("/api")
 
