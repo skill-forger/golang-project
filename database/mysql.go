@@ -1,26 +1,19 @@
-package infra
+package database
 
 import (
+	"golang-project-layout/config"
 	"golang-project-layout/statics"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
-type DBConn interface {
-	DataSourceName() string
-	Open() (*gorm.DB, error)
-	Close() error
-	Instance() (*gorm.DB, error)
-	Ping() error
-}
-
 type connection struct {
 	dsn       string
-	appConfig *AppConfig
+	appConfig *config.AppConfig
 	instance  *gorm.DB
 }
 
-func NewDBConn(dsn string, appConfig *AppConfig) DBConn {
+func NewDBConn(dsn string, appConfig *config.AppConfig) config.DBConn {
 	return &connection{dsn: dsn, appConfig: appConfig}
 }
 

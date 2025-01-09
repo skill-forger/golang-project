@@ -1,7 +1,8 @@
-package infra
+package database
 
 import (
 	"errors"
+	"golang-project-layout/config"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 	"log"
@@ -14,16 +15,8 @@ var (
 	ErrUninitializedDatabase = errors.New("database instance is not initialized")
 )
 
-type GormConfig struct {
-	*gorm.Config
-	MaxOpenConnections int
-	MaxIdleConnections int
-	ConnectionMaxTime  time.Duration
-	ConnectionIdleTime time.Duration
-}
-
-func newDefaultConfig() *GormConfig {
-	return &GormConfig{
+func NewDefaultConfig() *config.GormConfig {
+	return &config.GormConfig{
 		Config:             newGormConfig(),
 		MaxIdleConnections: 2,
 		MaxOpenConnections: 4,
