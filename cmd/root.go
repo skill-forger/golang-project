@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"golang-project-layout/migrations"
 	"os"
 
 	"golang-project-layout/config"
@@ -31,6 +32,7 @@ func Execute() {
 
 func init() {
 	rootCmd.AddCommand(NewServerCommand())
+	rootCmd.AddCommand(MigrationCommand())
 	// Here you will define your flags and configuration settings.
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
@@ -59,6 +61,22 @@ func NewServerCommand() *cobra.Command {
 	}
 
 	return command
+}
+
+func MigrationCommand() *cobra.Command {
+	return &cobra.Command{
+		Use:   "migrate",
+		Short: "Database Migration",
+		Run: func(cmd *cobra.Command, args []string) {
+			serverEnv := os.Getenv("SERVER_ENV")
+			var app *config.AppConfig
+			if serverEnv == "dev" {
+				app = LoadConfig(".")
+			}
+
+			migrations.Migrate(app)
+		},
+	}
 }
 
 func LoadConfig(path string) *config.AppConfig {
