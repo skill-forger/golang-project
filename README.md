@@ -38,3 +38,6 @@ or
 ```bash
 make run
 ```
+
+* Database Migration
+make migrate
