@@ -6,6 +6,7 @@ import (
 	"gorm.io/gorm"
 )
 
+// RunInTx wrap the logic function inside a gorm transaction
 func RunInTx(db *gorm.DB, fn func(tx *gorm.DB) error) error {
 	tx := db.Begin()
 	if tx.Error != nil {
@@ -14,8 +15,7 @@ func RunInTx(db *gorm.DB, fn func(tx *gorm.DB) error) error {
 
 	err := fn(tx)
 	if err == nil {
-		commitResult := tx.Commit()
-		return commitResult.Error
+		return tx.Commit().Error
 	}
 
 	rollbackResult := tx.Rollback()
