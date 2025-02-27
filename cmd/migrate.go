@@ -6,6 +6,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// migrateCmd represents the migrate command in Cobra Command structure
 var migrateCmd = &cobra.Command{
 	Use:   "migrate",
 	Short: "go-project migrate command",

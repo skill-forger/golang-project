@@ -24,11 +24,11 @@ type connection struct {
 // NewConnection creates and returns a database connection instance
 func NewConnection(dsn string, config *Config) Connection {
 	if config == nil {
-		config = NewDefaultConfig()
+		config = newDefaultConfig()
 	}
 
 	if config.Config == nil {
-		config.Config = NewGormConfig()
+		config.Config = newGormConfig()
 	}
 
 	return &connection{dsn: dsn, config: config}

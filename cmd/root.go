@@ -8,6 +8,7 @@ import (
 	"github.com/spf13/viper"
 )
 
+// rootCmd represents the go-project command in Cobra Command structure
 var rootCmd = &cobra.Command{
 	Use:   "go-project",
 	Short: "go-project root command",
@@ -16,6 +17,7 @@ var rootCmd = &cobra.Command{
 	},
 }
 
+// Execute processes the root Command and call the Run function
 func Execute() {
 	err := rootCmd.Execute()
 	if err != nil {
@@ -23,6 +25,7 @@ func Execute() {
 	}
 }
 
+// init loads environment variable into Viper
 func init() {
 	rootCmd.Flags().String("config", "./local.env", "config file")
 	viper.SetConfigFile(rootCmd.Flag("config").Value.String())

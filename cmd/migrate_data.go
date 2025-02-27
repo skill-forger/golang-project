@@ -6,6 +6,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// migrateDataCmd represents the data command in Cobra Command structure
 var migrateDataCmd = &cobra.Command{
 	Use:   "data",
 	Short: "seed the database data for the go-project",

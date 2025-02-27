@@ -24,17 +24,17 @@ type Config struct {
 	MaxOpenConnections int
 }
 
-// NewDefaultConfig returns a default configuration for database Connection
-func NewDefaultConfig() *Config {
+// newDefaultConfig returns a default configuration for database Connection
+func newDefaultConfig() *Config {
 	return &Config{
-		Config:             NewGormConfig(),
+		Config:             newGormConfig(),
 		MaxIdleConnections: 2,
 		MaxOpenConnections: 4,
 	}
 }
 
-// NewGormConfig returns the default Gorm configuration for database Connection
-func NewGormConfig() *gorm.Config {
+// newGormConfig returns the default Gorm configuration for database Connection
+func newGormConfig() *gorm.Config {
 	return &gorm.Config{Logger: logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags),
 		logger.Config{
