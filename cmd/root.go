@@ -12,7 +12,7 @@ var rootCmd = &cobra.Command{
 	Use:   "go-project",
 	Short: "go-project root command",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("golang project layout root command called")
+		fmt.Println("golang project root command called")
 	},
 }
 

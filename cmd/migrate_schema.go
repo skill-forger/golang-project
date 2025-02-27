@@ -8,7 +8,7 @@ import (
 
 var migrateSchemaCmd = &cobra.Command{
 	Use:   "schema",
-	Short: "A brief description of your command",
+	Short: "migrate the database schema for the go-project",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("migrateSchema called")
 	},

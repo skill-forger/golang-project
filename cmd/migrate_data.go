@@ -8,7 +8,7 @@ import (
 
 var migrateDataCmd = &cobra.Command{
 	Use:   "data",
-	Short: "A brief description of your command",
+	Short: "seed the database data for the go-project",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("migrateData called")
 	},

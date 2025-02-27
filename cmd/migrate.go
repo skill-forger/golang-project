@@ -8,7 +8,7 @@ import (
 
 var migrateCmd = &cobra.Command{
 	Use:   "migrate",
-	Short: "A brief description of your command",
+	Short: "go-project migrate command",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("migrate called")
 	},
