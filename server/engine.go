@@ -37,7 +37,7 @@ func (e *engine) Startup(handlers ...HandlerRegistry) error {
 	}
 
 	for _, handler := range handlers {
-		handler(e.server)
+		handler.Register(e.server.Group(handler.Route))
 	}
 
 	return e.server.Start(e.Address())

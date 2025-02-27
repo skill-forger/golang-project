@@ -1,4 +1,4 @@
-package Profile
+package profile
 
 import (
 	repo "golang-project-layout/internal/repository"

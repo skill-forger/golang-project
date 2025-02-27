@@ -13,4 +13,7 @@ var (
 
 type ConfigProvider func(*echo.Echo)
 
-type HandlerRegistry func(*echo.Echo)
+type HandlerRegistry struct {
+	Route    string
+	Register func(*echo.Group)
+}

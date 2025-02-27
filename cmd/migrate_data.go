@@ -14,6 +14,7 @@ var migrateDataCmd = &cobra.Command{
 	},
 }
 
+// init adds the data command into the migrate command
 func init() {
 	migrateCmd.AddCommand(migrateDataCmd)
 }

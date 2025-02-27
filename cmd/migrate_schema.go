@@ -14,6 +14,7 @@ var migrateSchemaCmd = &cobra.Command{
 	},
 }
 
+// init adds the schema command into the migrate command
 func init() {
 	migrateCmd.AddCommand(migrateSchemaCmd)
 }
