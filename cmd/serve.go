@@ -47,7 +47,7 @@ func runServeCmd(cmd *cobra.Command, args []string) {
 	)
 
 	databaseConnection := database.NewConnection(databaseSourceName, nil)
-	_, err := databaseConnection.Open()
+	databaseInstance, err := databaseConnection.Open()
 	if err != nil {
 		log.Fatal("database error:", err)
 	}
@@ -57,7 +57,7 @@ func runServeCmd(cmd *cobra.Command, args []string) {
 		log.Fatal("database error:", err)
 	}
 
-	handlerRegistries, err := registry.NewHandlerRegistries(databaseConnection)
+	handlerRegistries, err := registry.NewHandlerRegistries(databaseInstance)
 	if err != nil {
 		log.Fatal("registry error:", err)
 	}

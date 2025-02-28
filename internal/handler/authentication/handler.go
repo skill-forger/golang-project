@@ -30,7 +30,7 @@ func (h *handler) RegisterRoutes() server.HandlerRegistry {
 	}
 }
 
-func (h *handler) SignIn(ctx echo.Context) error {
+func (h *handler) SignIn(e echo.Context) error {
 	//TODO implement me
 	panic("implement me")
 }
