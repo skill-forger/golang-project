@@ -15,8 +15,10 @@ import (
 	"github.com/spf13/viper"
 
 	"golang-project-layout/database"
+	"golang-project-layout/internal/middleware"
 	"golang-project-layout/internal/registry"
 	"golang-project-layout/server"
+	"golang-project-layout/static"
 )
 
 // serveCmd represents the serve command in Cobra Command structure
@@ -39,11 +41,11 @@ func runServeCmd(cmd *cobra.Command, args []string) {
 
 	databaseSourceName := fmt.Sprintf(
 		"%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
-		viper.GetString("DB_USER"),
-		viper.GetString("DB_PASSWORD"),
-		viper.GetString("DB_HOST"),
-		viper.GetString("DB_PORT"),
-		viper.GetString("DB_NAME"),
+		viper.GetString(static.EnvDbUser),
+		viper.GetString(static.EnvDbPassword),
+		viper.GetString(static.EnvDbHost),
+		viper.GetString(static.EnvDbPort),
+		viper.GetString(static.EnvDbName),
 	)
 
 	databaseConnection := database.NewConnection(databaseSourceName, nil)
@@ -64,11 +66,22 @@ func runServeCmd(cmd *cobra.Command, args []string) {
 
 	serverConfigs := []server.ConfigProvider{
 		func(e *echo.Echo) { e.Debug = true },
+		func(e *echo.Echo) { e.HTTPErrorHandler = middleware.ErrorHandler },
+		func(e *echo.Echo) {
+			e.Use(
+				middleware.Recover(),
+				middleware.Timeout(),
+				middleware.Correlation(),
+				middleware.Authentication(),
+			)
+		},
 	}
 
-	serverEngine := server.NewEngine(viper.GetString("SERVER_ADDRESS"), serverConfigs...)
+	serverEngine := server.NewEngine(viper.GetString(static.EnvServerAddress), serverConfigs...)
 
 	go func() {
+		log.Println("golang server starts on environment:", viper.GetString(static.EnvServerEnv))
+
 		err = serverEngine.Startup(handlerRegistries...)
 		if err != nil && !errors.Is(err, http.ErrServerClosed) {
 			log.Fatal("server error:", err)
@@ -87,7 +100,7 @@ func runServeCmd(cmd *cobra.Command, args []string) {
 		log.Println(err)
 	}
 
-	log.Println("go project server gracefully shutdowns")
+	log.Println("golang server gracefully shutdowns")
 
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
