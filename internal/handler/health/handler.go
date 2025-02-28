@@ -7,7 +7,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
 
-	"golang-project-layout/internal/contract"
+	ct "golang-project-layout/internal/contract"
 	hdl "golang-project-layout/internal/handler"
 	"golang-project-layout/server"
 )
@@ -43,15 +43,15 @@ func (h *handler) RegisterRoutes() server.HandlerRegistry {
 // @Failure      400  {object}  error
 // @Router       /health [get]
 func (h *handler) HealthCheck(e echo.Context) error {
-	response := []*contract.HealthCheckResponse{{Resource: "server", Status: "ok"}}
+	response := []*ct.HealthCheckResponse{{Resource: "server", Status: "ok"}}
 	response = append(response, h.CheckDatabase())
 
 	return e.JSON(http.StatusOK, response)
 }
 
 // CheckDatabase return contract.HealthCheckResponse with the server and database result
-func (h *handler) CheckDatabase() *contract.HealthCheckResponse {
-	result := &contract.HealthCheckResponse{Resource: "database", Status: "ok"}
+func (h *handler) CheckDatabase() *ct.HealthCheckResponse {
+	result := &ct.HealthCheckResponse{Resource: "database", Status: "ok"}
 
 	if h.db == nil {
 		result.Status = "error: database instance is missing"

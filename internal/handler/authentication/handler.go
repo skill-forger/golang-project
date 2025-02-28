@@ -2,11 +2,12 @@ package authentication
 
 import (
 	"github.com/labstack/echo/v4"
+	"net/http"
 
-	"golang-project-layout/server"
-
+	ct "golang-project-layout/internal/contract"
 	hdl "golang-project-layout/internal/handler"
 	svc "golang-project-layout/internal/service"
+	"golang-project-layout/server"
 )
 
 type handler struct {
@@ -31,6 +32,19 @@ func (h *handler) RegisterRoutes() server.HandlerRegistry {
 }
 
 func (h *handler) SignIn(e echo.Context) error {
-	//TODO implement me
-	panic("implement me")
+	request := new(ct.SignInRequest)
+	if err := e.Bind(request); err != nil {
+		return err
+	}
+
+	if err := e.Validate(request); err != nil {
+		return err
+	}
+
+	response, err := h.authSvc.SignIn(request)
+	if err != nil {
+		return err
+	}
+
+	return e.JSON(http.StatusOK, response)
 }

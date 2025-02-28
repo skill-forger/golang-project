@@ -7,8 +7,9 @@ import (
 	hdl "golang-project-layout/internal/handler/authentication"
 	repo "golang-project-layout/internal/repository/user"
 	svc "golang-project-layout/internal/service/authentication"
+	"golang-project-layout/util/hashing"
 )
 
 func NewRegistry(route string, db *gorm.DB) handler.ResourceHandler {
-	return hdl.NewHandler(route, svc.NewService(repo.NewRepository(db)))
+	return hdl.NewHandler(route, svc.NewService(repo.NewRepository(db), hashing.NewBcrypt()))
 }
