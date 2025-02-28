@@ -10,23 +10,21 @@ services:
     environment:
       - MYSQL_DATABASE=go
       - MYSQL_USER=go
-      - MYSQL_PASSWORD=gogogo123!@#
+      - MYSQL_PASSWORD=gogogo123456
       - MYSQL_ROOT_PASSWORD=root123!@#
     ports:
       - '4406:3306'
     hostname: go-project-mysql
     container_name: go-project-mysql
-    networks:
-      - go-project
 
   phpmyadmin:
     image: phpmyadmin:5.2
     restart: unless-stopped
     environment:
       - PMA_HOST=go-project-mysql
-      - PMA_PORT=3306
+      - PMA_PORT=4406
       - PMA_USER=go
-      - PMA_PASSWORD=gogogo123!@#
+      - PMA_PASSWORD=gogogo123456
       - MYSQL_ROOT_PASSWORD=root123!@#
     ports:
       - '8080:80'
@@ -34,12 +32,6 @@ services:
     container_name: go-project-phpmyadmin
     depends_on:
       - mysql
-    networks:
-      - go-project
 
 volumes:
   mysql-data:
-
-networks:
-  go-project:
-    driver: bridge

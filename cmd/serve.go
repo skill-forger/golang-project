@@ -37,7 +37,7 @@ func runServeCmd(cmd *cobra.Command, args []string) {
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, syscall.SIGINT, syscall.SIGTERM)
 
-	dsn := fmt.Sprintf(
+	databaseSourceName := fmt.Sprintf(
 		"%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
 		viper.GetString("DB_USER"),
 		viper.GetString("DB_PASSWORD"),
@@ -46,8 +46,8 @@ func runServeCmd(cmd *cobra.Command, args []string) {
 		viper.GetString("DB_NAME"),
 	)
 
-	databaseConnection := database.NewConnection(dsn, nil)
-	databaseInstance, err := databaseConnection.Open()
+	databaseConnection := database.NewConnection(databaseSourceName, nil)
+	_, err := databaseConnection.Open()
 	if err != nil {
 		log.Fatal("database error:", err)
 	}
@@ -57,7 +57,10 @@ func runServeCmd(cmd *cobra.Command, args []string) {
 		log.Fatal("database error:", err)
 	}
 
-	handlerRegistries := registry.NewHandlerRegistries(databaseInstance)
+	handlerRegistries, err := registry.NewHandlerRegistries(databaseConnection)
+	if err != nil {
+		log.Fatal("registry error:", err)
+	}
 
 	serverConfigs := []server.ConfigProvider{
 		func(e *echo.Echo) { e.Debug = true },
