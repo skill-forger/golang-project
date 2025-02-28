@@ -1,35 +1,37 @@
 services:
-  db:
-    image: mysql:9.1.0
-    container_name: mysql-container
-    environment:
-      MYSQL_ROOT_PASSWORD: Root!23456
-      MYSQL_DATABASE: john-davis
-      MYSQL_USER: john-davis
-      MYSQL_PASSWORD: John-davis!23456
-    ports:
-      - "6033:3306"
+  mysql:
+    image: mysql:9
+    restart: always
+    cap_add:
+      - ALL
     volumes:
+#      - ./data:/var/lib/mysql
       - mysql-data:/var/lib/mysql
-#    networks:
-#      - mysql-phpmyadmin
+    environment:
+      - MYSQL_DATABASE=go
+      - MYSQL_USER=go
+      - MYSQL_PASSWORD=gogogo123456
+      - MYSQL_ROOT_PASSWORD=root123!@#
+    ports:
+      - '4406:3306'
+    hostname: go-project-mysql
+    container_name: go-project-mysql
 
-#  phpmyadmin:
-#    image: phpmyadmin/phpmyadmin
-#    container_name: phpmyadmin
-#    links:
-#      - db
-#    environment:
-#      PMA_HOST: mysql-container
-#      PMA_PORT: 3306
-#      PMA_ARBITRARY: 1
-#    ports:
-#      - 8888:80
-#    networks:
-#      - mysql-phpmyadmin
+  phpmyadmin:
+    image: phpmyadmin:5.2
+    restart: unless-stopped
+    environment:
+      - PMA_HOST=go-project-mysql
+      - PMA_PORT=4406
+      - PMA_USER=go
+      - PMA_PASSWORD=gogogo123456
+      - MYSQL_ROOT_PASSWORD=root123!@#
+    ports:
+      - '8080:80'
+    hostname: go-project-phpmyadmin
+    container_name: go-project-phpmyadmin
+    depends_on:
+      - mysql
 
 volumes:
   mysql-data:
-#
-#networks:
-#  mysql-phpmyadmin:
