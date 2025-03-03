@@ -1,12 +1,13 @@
 package profile
 
 import (
-	"github.com/labstack/echo/v4"
+	"net/http"
 
-	"golang-project-layout/server"
+	"github.com/labstack/echo/v4"
 
 	hdl "golang-project-layout/internal/handler"
 	svc "golang-project-layout/internal/service"
+	"golang-project-layout/server"
 )
 
 type handler struct {
@@ -21,7 +22,7 @@ func NewHandler(route string, profileSvc svc.Profile) hdl.Profile {
 	}
 }
 
-func (h handler) RegisterRoutes() server.HandlerRegistry {
+func (h *handler) RegisterRoutes() server.HandlerRegistry {
 	return server.HandlerRegistry{
 		Route: h.route,
 		Register: func(group *echo.Group) {
@@ -30,7 +31,16 @@ func (h handler) RegisterRoutes() server.HandlerRegistry {
 	}
 }
 
-func (h handler) Get(ctx echo.Context) error {
-	//TODO implement me
-	panic("implement me")
+func (h *handler) Get(e echo.Context) error {
+	ctxUser, err := hdl.GetContextUser(e)
+	if err != nil {
+		return err
+	}
+
+	response, err := h.profileSvc.GetByID(ctxUser.ID)
+	if err != nil {
+		return err
+	}
+
+	return e.JSON(http.StatusOK, response)
 }

@@ -9,5 +9,5 @@ type Authentication interface {
 }
 
 type Profile interface {
-	GetDetail()
+	GetByID(int) (*ct.ProfileResponse, error)
 }

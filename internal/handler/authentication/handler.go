@@ -1,8 +1,9 @@
 package authentication
 
 import (
-	"github.com/labstack/echo/v4"
 	"net/http"
+
+	"github.com/labstack/echo/v4"
 
 	ct "golang-project-layout/internal/contract"
 	hdl "golang-project-layout/internal/handler"
