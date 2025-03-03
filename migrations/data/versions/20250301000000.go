@@ -7,7 +7,7 @@ import (
 	"golang-project-layout/util/hashing"
 )
 
-func Migrate20250301000000(tx *gorm.DB) error {
+func Migrate20250301000000(db *gorm.DB) error {
 	demoPassword, err := hashing.NewBcrypt().Generate([]byte("demouser@123"))
 	if err != nil {
 		return err
@@ -19,7 +19,7 @@ func Migrate20250301000000(tx *gorm.DB) error {
 		LastName     string
 		Email        string
 		Password     string
-		DisplayName  string
+		Pseudonym    string
 		ProfileImage string
 		Biography    string
 	}
@@ -29,10 +29,18 @@ func Migrate20250301000000(tx *gorm.DB) error {
 		LastName:     "user",
 		Email:        "user@demo.com",
 		Password:     string(demoPassword),
-		DisplayName:  "demo_user",
+		Pseudonym:    "demo_user",
 		ProfileImage: "demo user profile image",
 		Biography:    "this is the demo user biography",
 	}
 
-	return tx.Model(&User{}).Create(data).Error
+	return db.Model(&User{}).Create(data).Error
+}
+
+func Rollback20250301000000(db *gorm.DB) error {
+	type User struct {
+		model.BaseModel
+	}
+
+	return db.Unscoped().Delete(&User{}, map[string]any{"email": "user@demo.com"}).Error
 }

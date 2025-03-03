@@ -7,16 +7,15 @@ import (
 	"golang-project-layout/migrations/data/versions"
 )
 
-func Migrate(db *gorm.DB) error {
+func NewMigration(db *gorm.DB) *gormigrate.Gormigrate {
 	option := gormigrate.DefaultOptions
 	option.TableName = "data_migrations"
 
-	m := gormigrate.New(db, option, []*gormigrate.Migration{
+	return gormigrate.New(db, option, []*gormigrate.Migration{
 		{
-			ID:      "20250301000000",
-			Migrate: versions.Migrate20250301000000,
+			ID:       "20250301000000",
+			Migrate:  versions.Migrate20250301000000,
+			Rollback: versions.Rollback20250301000000,
 		},
 	})
-
-	return m.Migrate()
 }
