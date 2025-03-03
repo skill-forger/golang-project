@@ -1,6 +1,7 @@
 package profile
 
 import (
+	ct "golang-project-layout/internal/contract"
 	repo "golang-project-layout/internal/repository"
 	svc "golang-project-layout/internal/service"
 )
@@ -15,7 +16,11 @@ func NewService(userRepo repo.User) svc.Profile {
 	}
 }
 
-func (p *service) GetDetail() {
-	//TODO implement me
-	panic("implement me")
+func (s *service) GetByID(id int) (*ct.ProfileResponse, error) {
+	user, err := s.userRepo.Read(id)
+	if err != nil {
+		return nil, err
+	}
+
+	return prepareProfileResponse(user), nil
 }

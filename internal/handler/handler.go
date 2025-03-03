@@ -1,8 +1,11 @@
 package handler
 
 import (
+	"net/http"
+
 	"github.com/labstack/echo/v4"
 
+	ct "golang-project-layout/internal/contract"
 	"golang-project-layout/server"
 )
 
@@ -35,4 +38,14 @@ type Authentication interface {
 type Profile interface {
 	ResourceHandler
 	Get(echo.Context) error
+}
+
+// GetContextUser returns the authenticated user in echo Context
+func GetContextUser(e echo.Context) (*ct.ContextUser, error) {
+	ctxUser, ok := e.Get("user").(*ct.ContextUser)
+	if !ok {
+		return nil, echo.NewHTTPError(http.StatusUnauthorized, "context user is malformed or missing")
+	}
+
+	return ctxUser, nil
 }
