@@ -3,6 +3,8 @@ module golang-project-layout
 go 1.23
 
 require (
+	github.com/brianvoe/gofakeit/v6 v6.28.0
+	github.com/go-gormigrate/gormigrate/v2 v2.1.3
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/google/uuid v1.4.0
 	github.com/labstack/echo-jwt/v4 v4.3.0

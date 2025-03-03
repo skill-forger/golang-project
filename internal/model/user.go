@@ -2,7 +2,11 @@ package model
 
 type User struct {
 	BaseModel
-	Email    string
-	Password string
-	Name     string
+	FirstName    string
+	LastName     string
+	Email        string
+	Password     string
+	DisplayName  string
+	ProfileImage string
+	Biography    string
 }
