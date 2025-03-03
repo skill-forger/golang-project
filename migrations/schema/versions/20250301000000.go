@@ -1,8 +1,9 @@
 package versions
 
 import (
-	"golang-project-layout/internal/model"
 	"gorm.io/gorm"
+
+	"golang-project-layout/internal/model"
 )
 
 func Migrate20250301000000(db *gorm.DB) error {

@@ -10,21 +10,21 @@ import (
 	"golang-project-layout/static"
 )
 
-// migrateCmd represents the migrate command in Cobra Command structure
-var migrateCmd = &cobra.Command{
-	Use:   "migrate",
-	Short: "go-project migrate command",
+// migrationCmd represents the migration command in Cobra Command structure
+var migrationCmd = &cobra.Command{
+	Use:   "migration",
+	Short: "go-project migration command",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("migrate called")
+		fmt.Println("migration called")
 	},
 }
 
 // init adds the migrate command into the root command
 func init() {
-	rootCmd.AddCommand(migrateCmd)
+	rootCmd.AddCommand(migrationCmd)
 }
 
-// newDatabaseConnection returns new database connection
+// newDatabaseConnection creates new database connection
 func newDatabaseConnection() database.Connection {
 	databaseSourceName := fmt.Sprintf(
 		"%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
