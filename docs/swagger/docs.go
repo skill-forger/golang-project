@@ -94,6 +94,11 @@ const docTemplate = `{
         },
         "/profile": {
             "get": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
                 "description": "Respond profile detail information",
                 "consumes": [
                     "application/json"
@@ -105,15 +110,6 @@ const docTemplate = `{
                     "profile"
                 ],
                 "summary": "Respond profile detail information",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Bearer Token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -208,12 +204,10 @@ const docTemplate = `{
     },
     "securityDefinitions": {
         "BearerToken": {
-            "type": "basic"
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         }
-    },
-    "externalDocs": {
-        "description": "OpenAPI",
-        "url": "https://swagger.io/resources/open-api/"
     }
 }`
 

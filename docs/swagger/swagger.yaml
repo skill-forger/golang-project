@@ -49,9 +49,6 @@ definitions:
       user_id:
         type: integer
     type: object
-externalDocs:
-  description: OpenAPI
-  url: https://swagger.io/resources/open-api/
 host: localhost:3000
 info:
   contact:
@@ -116,12 +113,6 @@ paths:
       consumes:
       - application/json
       description: Respond profile detail information
-      parameters:
-      - description: Bearer Token
-        in: header
-        name: Authorization
-        required: true
-        type: string
       produces:
       - application/json
       responses:
@@ -132,10 +123,14 @@ paths:
         "400":
           description: Bad Request
           schema: {}
+      security:
+      - BearerToken: []
       summary: Respond profile detail information
       tags:
       - profile
 securityDefinitions:
   BearerToken:
-    type: basic
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

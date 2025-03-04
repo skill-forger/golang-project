@@ -38,9 +38,9 @@ func (h *handler) RegisterRoutes() server.HandlerRegistry {
 //	@Tags			profile
 //	@Accept			json
 //	@Produce		json
-//	@Param			Authorization	header		string	true	"Bearer Token"
-//	@Success		200				{object}	contract.ProfileResponse
-//	@Failure		400				{object}	error
+//	@Security		BearerToken
+//	@Success		200	{object}	contract.ProfileResponse
+//	@Failure		400	{object}	error
 //	@Router			/profile [get]
 func (h *handler) Get(e echo.Context) error {
 	ctxUser, err := hdl.GetContextUser(e)
