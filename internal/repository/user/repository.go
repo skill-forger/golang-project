@@ -27,14 +27,22 @@ func (r *repository) Read(id int) (*model.User, error) {
 	return result, nil
 }
 
+func (r *repository) ReadByEmail(email string) (*model.User, error) {
+	var result *model.User
+
+	query := r.db.Model(&model.User{}).First(&result, "`email` = ?", email)
+
+	if err := query.Error; err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (r *repository) Insert(o *model.User) (*model.User, error) {
 	return nil, nil
 }
 
 func (r *repository) Update(o *model.User) (*model.User, error) {
-	return nil, nil
-}
-
-func (r *repository) ReadByCondition(m map[string]any) (*model.User, error) {
 	return nil, nil
 }

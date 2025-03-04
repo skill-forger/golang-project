@@ -28,7 +28,7 @@ func NewService(userRepo repo.User, hash hashing.Algorithm) svc.Authentication {
 }
 
 func (s *service) SignIn(r *ct.SignInRequest) (*ct.SignInResponse, error) {
-	user, err := s.userRepo.ReadByCondition(map[string]any{"email": r.Email})
+	user, err := s.userRepo.ReadByEmail(r.Email)
 	if err != nil {
 		return nil, err
 	}

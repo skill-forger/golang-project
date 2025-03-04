@@ -32,13 +32,19 @@ func (h *handler) RegisterRoutes() server.HandlerRegistry {
 	}
 }
 
+// SignIn handles the authentication request via predefined credentials
+//	@Summary		Signs In user into the system
+//	@Description	Authenticates user via predefined credentials and return JWT Token
+//	@Tags			authentication
+//	@Accept			json
+//	@Produce		json
+//	@Param			SignInRequest	body		ct.SignInRequest	true "Sign In Request Payload"
+//	@Success		200				{array}		ct.SignInResponse
+//	@Failure		400				{object}	error
+//	@Router			/auth/sign-in [post]
 func (h *handler) SignIn(e echo.Context) error {
 	request := new(ct.SignInRequest)
 	if err := e.Bind(request); err != nil {
-		return err
-	}
-
-	if err := e.Validate(request); err != nil {
 		return err
 	}
 

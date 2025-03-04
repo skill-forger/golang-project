@@ -2,6 +2,9 @@
 serve:
 	go run main.go serve
 swag:
+	swag fmt
 	swag init --parseDependency --parseDependencyLevel 3 -g main.go -g handler.go -d ./internal/handler -o ./docs/swagger
 migrate:
-	env SERVER_ENV=local go run ./... migrate
+	go run main.go migration migrate --schema --data
+rollback:
+	go run main.go migration rollback --schema --data
