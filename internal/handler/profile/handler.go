@@ -24,13 +24,24 @@ func NewHandler(route string, profileSvc svc.Profile) hdl.Profile {
 
 func (h *handler) RegisterRoutes() server.HandlerRegistry {
 	return server.HandlerRegistry{
-		Route: h.route,
+		Route:           h.route,
+		IsAuthenticated: true,
 		Register: func(group *echo.Group) {
-			group.GET("/", h.Get)
+			group.GET("", h.Get)
 		},
 	}
 }
 
+// Get   handles the profile detail request
+//	@Summary		Respond profile detail information
+//	@Description	Respond profile detail information
+//	@Tags			profile
+//	@Accept			json
+//	@Produce		json
+//	@Param			Authorization	header		string	true	"Bearer Token"
+//	@Success		200				{object}	contract.ProfileResponse
+//	@Failure		400				{object}	error
+//	@Router			/profile [get]
 func (h *handler) Get(e echo.Context) error {
 	ctxUser, err := hdl.GetContextUser(e)
 	if err != nil {

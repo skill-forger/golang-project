@@ -1,21 +1,26 @@
 package middleware
 
 import (
-	"github.com/spf13/viper"
+	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/golang-jwt/jwt"
 	echoJwt "github.com/labstack/echo-jwt/v4"
 	"github.com/labstack/echo/v4"
+	"github.com/spf13/viper"
+
 	ct "golang-project-layout/internal/contract"
+	"golang-project-layout/server"
 	"golang-project-layout/static"
 )
 
-func Authentication() echo.MiddlewareFunc {
+func Authentication(registries []server.HandlerRegistry) echo.MiddlewareFunc {
+	pathSkipper := mapPathSkipper(registries)
+
 	return echoJwt.WithConfig(echoJwt.Config{
 		Skipper: func(c echo.Context) bool {
-			uri := c.Request().URL.String()
-			return uri == "/auth" || uri == "/health"
+			return pathSkipper[getRouteGroup(c.Request().URL.Path)]
 		},
 		SigningKey:    []byte(viper.GetString(static.EnvAuthSecret)),
 		SigningMethod: echoJwt.AlgorithmHS256,
@@ -37,4 +42,26 @@ func Authentication() echo.MiddlewareFunc {
 			return &ct.ContextUser{ID: claim.UserID, Email: claim.UserEmail}, nil
 		},
 	})
+}
+
+func mapPathSkipper(registries []server.HandlerRegistry) map[string]bool {
+	result := map[string]bool{"/": true, "/favicon.ico": true}
+
+	for _, r := range registries {
+		if r.IsAuthenticated {
+			continue
+		}
+		result[r.Route] = true
+	}
+
+	return result
+}
+
+func getRouteGroup(path string) string {
+	paths := strings.Split(path, "/")
+	if len(paths) < 2 {
+		return ""
+	}
+
+	return fmt.Sprintf("/%s", paths[1])
 }

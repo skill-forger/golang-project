@@ -34,14 +34,14 @@ func (h *handler) RegisterRoutes() server.HandlerRegistry {
 }
 
 // HealthCheck   handles the checking of server and database liveness
-// @Summary      Show server liveness
-// @Description  Perform server and dependent resource liveness check
-// @Tags         health
-// @Accept       json
-// @Produce      json
-// @Success      200  {object}  contract.HealthCheckResponse
-// @Failure      400  {object}  error
-// @Router       /health [get]
+//	@Summary		Show server liveness
+//	@Description	Perform server and dependent resource liveness check
+//	@Tags			health
+//	@Accept			json
+//	@Produce		json
+//	@Success		200	{object}	contract.HealthCheckResponse
+//	@Failure		400	{object}	error
+//	@Router			/health [get]
 func (h *handler) HealthCheck(e echo.Context) error {
 	response := []*ct.HealthCheckResponse{{Resource: "server", Status: "ok"}}
 	response = append(response, h.CheckDatabase())

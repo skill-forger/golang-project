@@ -16,6 +16,10 @@ type ConfigProvider func(*echo.Echo)
 
 // HandlerRegistry represents the route group and function that are used by each handler
 type HandlerRegistry struct {
-	Route    string
+	// Route is the route group name of URI
+	Route string
+	// IsAuthenticated indicates where this route group needs authenticated access
+	IsAuthenticated bool
+	// Register the function to register the handler for each rout
 	Register func(*echo.Group)
 }
