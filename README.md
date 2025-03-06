@@ -4,40 +4,42 @@
 - Init Project using Golang [Cobra](https://github.com/spf13/cobra)
 - Parse and Get Env Configuration using [Viper](https://github.com/spf13/viper)
 - Implement Http Server Router [Echo](https://echo.labstack.com/docs)
-- Connect to MySQL Data via [Gorm](https://gorm.io/docs/)
+- Connect to MySQL Database Management System via [Gorm](https://gorm.io/docs/)
 - Prepare local testing and start up with [Docker Compose](https://docs.docker.com/manuals/)
 
-# Dependencies
-```go install github.com/swaggo/swag/cmd/swag@v1.16.4```
+## Dependencies
 
-# Install Cobra CLI
+### Swagger
+```bash
+go install github.com/swaggo/swag/cmd/swag@v1.16.4
+```
 
+### Cobra
+```bash
+go install github.com/spf13/cobra-cli@latest
+```
 
 # Project Layout
 This project uses Monolithic Modular Architecture.
 
-# Swagger
+## Swagger
 * Play url:
 ```
-http://localhost:8080/swagger/index.html
+http://localhost:3000/swagger/index.html
 ```
 * Generate swagger specification
 ```bash
-make swag
+swag init --parseDependency --parseDependencyLevel 3 -g main.go -g handler.go -d ./internal/handler -o ./docs/swagger
 ```
 
-# How to start the server
-* Add to the environment variable with these:
-  * SERVER_ENV=dev
-
-* Run by
-```bash
-env SERVER_ENV=dev go run cmd/main.go server
-```
-or
-```bash
-make run
-```
-
-* Database Migration
-make migrate
+## Server Startup
+1. Edit `local.env` file to specific environment configuration
+2. Make sure the database service is open and running
+3. At the root directory, Run the following command
+    ```bash
+    go run main.go serve
+    ```
+4. Migrate database schema and data
+    ```bash
+    go run main.go migration migrate --schema --data
+    ```
