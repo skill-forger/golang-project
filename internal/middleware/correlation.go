@@ -6,6 +6,7 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 )
 
+// Correlation provides the middleware for any request and response correlation ID
 func Correlation() echo.MiddlewareFunc {
 	config := middleware.RequestIDConfig{
 		Skipper:      func(c echo.Context) bool { return c.Request().URL.String() == "/health" },

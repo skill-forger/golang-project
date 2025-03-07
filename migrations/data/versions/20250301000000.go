@@ -7,6 +7,7 @@ import (
 	"golang-project-layout/util/hashing"
 )
 
+// Migrate20250301000000 performs migration logic for version 20250301000000
 func Migrate20250301000000(db *gorm.DB) error {
 	demoPassword, err := hashing.NewBcrypt().Generate([]byte("demouser@123"))
 	if err != nil {
@@ -37,6 +38,7 @@ func Migrate20250301000000(db *gorm.DB) error {
 	return db.Model(&User{}).Create(data).Error
 }
 
+// Rollback20250301000000 performs rollback logic for version 20250301000000
 func Rollback20250301000000(db *gorm.DB) error {
 	type User struct {
 		model.BaseModel

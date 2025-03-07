@@ -4,6 +4,7 @@ import (
 	"golang-project-layout/internal/model"
 )
 
+// User represents the repository actions to the user table
 type User interface {
 	Read(int) (*model.User, error)
 	Insert(*model.User) (*model.User, error)

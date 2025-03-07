@@ -7,6 +7,7 @@ import (
 	"golang-project-layout/migrations/data/versions"
 )
 
+// NewMigration returns new gorm data migration instance
 func NewMigration(db *gorm.DB) *gormigrate.Gormigrate {
 	option := gormigrate.DefaultOptions
 	option.TableName = "data_migrations"

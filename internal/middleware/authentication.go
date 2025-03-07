@@ -15,6 +15,7 @@ import (
 	"golang-project-layout/static"
 )
 
+// Authentication provides the middleware for any API requires user authentication
 func Authentication(registries []server.HandlerRegistry) echo.MiddlewareFunc {
 	pathSkipper := mapPathSkipper(registries)
 

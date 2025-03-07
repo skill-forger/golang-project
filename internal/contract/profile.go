@@ -1,5 +1,6 @@
 package contract
 
+// ProfileResponse specifies the data and types for profile API response
 type ProfileResponse struct {
 	ID           int    `json:"id,omitempty"`
 	FirstName    string `json:"first_name,omitempty"`

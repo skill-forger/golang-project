@@ -15,11 +15,13 @@ import (
 	"golang-project-layout/util/hashing"
 )
 
+// service represents the implementation of service.Authentication
 type service struct {
 	userRepo repo.User
 	hash     hashing.Algorithm
 }
 
+// NewService returns a new implementation of service.Authentication
 func NewService(userRepo repo.User, hash hashing.Algorithm) svc.Authentication {
 	return &service{
 		userRepo: userRepo,
@@ -27,6 +29,7 @@ func NewService(userRepo repo.User, hash hashing.Algorithm) svc.Authentication {
 	}
 }
 
+// SignIn executes the user authentication logic
 func (s *service) SignIn(r *ct.SignInRequest) (*ct.SignInResponse, error) {
 	user, err := s.userRepo.ReadByEmail(r.Email)
 	if err != nil {
@@ -46,6 +49,7 @@ func (s *service) SignIn(r *ct.SignInRequest) (*ct.SignInResponse, error) {
 	return prepareSignInResponse(user, token), nil
 }
 
+// generateToken returns the JWT token based on the information from model.User
 func (s *service) generateToken(user *model.User) (string, error) {
 	secret := []byte(viper.GetString(static.EnvAuthSecret))
 	customClaim := &ct.CustomClaim{

@@ -10,6 +10,7 @@ import (
 	"golang-project-layout/util/hashing"
 )
 
+// NewRegistry returns new resource handler for authentication API
 func NewRegistry(route string, db *gorm.DB) handler.ResourceHandler {
 	return hdl.NewHandler(route, svc.NewService(repo.NewRepository(db), hashing.NewBcrypt()))
 }

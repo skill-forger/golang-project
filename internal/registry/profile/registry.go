@@ -9,6 +9,7 @@ import (
 	svc "golang-project-layout/internal/service/profile"
 )
 
+// NewRegistry returns new resource handler for profile API
 func NewRegistry(route string, db *gorm.DB) handler.ResourceHandler {
 	return hdl.NewHandler(route, svc.NewService(repo.NewRepository(db)))
 }

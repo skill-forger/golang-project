@@ -12,11 +12,13 @@ import (
 	"golang-project-layout/server"
 )
 
+// handler represents the implementation of handler.ResourceHandler
 type handler struct {
 	route string
 	db    *gorm.DB
 }
 
+// NewHandler returns a new implementation of handler.ResourceHandler
 func NewHandler(route string, db *gorm.DB) hdl.ResourceHandler {
 	return &handler{
 		route: route,
@@ -24,6 +26,7 @@ func NewHandler(route string, db *gorm.DB) hdl.ResourceHandler {
 	}
 }
 
+// RegisterRoutes registers the handler routes and returns the server.HandlerRegistry
 func (h *handler) RegisterRoutes() server.HandlerRegistry {
 	return server.HandlerRegistry{
 		Route: h.route,

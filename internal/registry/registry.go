@@ -13,6 +13,7 @@ import (
 	"golang-project-layout/server"
 )
 
+// NewHandlerRegistries returns all server handler registries
 func NewHandlerRegistries(db *gorm.DB) ([]server.HandlerRegistry, error) {
 	registries := []server.HandlerRegistry{
 		initSwaggerRegistry(),
@@ -26,6 +27,7 @@ func NewHandlerRegistries(db *gorm.DB) ([]server.HandlerRegistry, error) {
 	return registries, nil
 }
 
+// initSwaggerRegistry returns the swagger handler registry
 func initSwaggerRegistry() server.HandlerRegistry {
 	return server.HandlerRegistry{
 		Route: "/swagger",
@@ -35,10 +37,12 @@ func initSwaggerRegistry() server.HandlerRegistry {
 	}
 }
 
+// initHealthCheckHandler returns the health check handler registry
 func initHealthCheckHandler(db *gorm.DB) handler.ResourceHandler {
 	return health.NewRegistry("/health", db)
 }
 
+// initResourceHandlers returns the service resource handler registry
 func initResourceHandlers(db *gorm.DB) []handler.ResourceHandler {
 	return []handler.ResourceHandler{
 		authentication.NewRegistry("/auth", db),

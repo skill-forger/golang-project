@@ -8,6 +8,7 @@ import (
 	"golang-project-layout/static"
 )
 
+// prepareSignInResponse transforms the data and returns the Sign In Response
 func prepareSignInResponse(o *m.User, token string) *ct.SignInResponse {
 	return &ct.SignInResponse{
 		UserID:       o.ID,

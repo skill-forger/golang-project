@@ -7,14 +7,17 @@ import (
 	repo "golang-project-layout/internal/repository"
 )
 
+// repository represents the implementation of repository.User
 type repository struct {
 	db *gorm.DB
 }
 
+// NewRepository returns a new implementation of repository.User
 func NewRepository(db *gorm.DB) repo.User {
 	return &repository{db: db}
 }
 
+// Read finds and returns the user model by email
 func (r *repository) Read(id int) (*model.User, error) {
 	var result *model.User
 
@@ -27,6 +30,7 @@ func (r *repository) Read(id int) (*model.User, error) {
 	return result, nil
 }
 
+// ReadByEmail finds and returns the user model by email
 func (r *repository) ReadByEmail(email string) (*model.User, error) {
 	var result *model.User
 
@@ -39,10 +43,12 @@ func (r *repository) ReadByEmail(email string) (*model.User, error) {
 	return result, nil
 }
 
+// Insert performs insert action into user table
 func (r *repository) Insert(o *model.User) (*model.User, error) {
 	return nil, nil
 }
 
+// Update performs update action into user table
 func (r *repository) Update(o *model.User) (*model.User, error) {
 	return nil, nil
 }

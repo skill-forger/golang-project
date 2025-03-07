@@ -11,11 +11,13 @@ import (
 	"golang-project-layout/server"
 )
 
+// handler represents the implementation of handler.Authentication
 type handler struct {
 	route   string
 	authSvc svc.Authentication
 }
 
+// NewHandler returns a new implementation of handler.Authentication
 func NewHandler(route string, authSvc svc.Authentication) hdl.Authentication {
 	return &handler{
 		route:   route,
@@ -23,6 +25,7 @@ func NewHandler(route string, authSvc svc.Authentication) hdl.Authentication {
 	}
 }
 
+// RegisterRoutes registers the handler routes and returns the server.HandlerRegistry
 func (h *handler) RegisterRoutes() server.HandlerRegistry {
 	return server.HandlerRegistry{
 		Route: h.route,

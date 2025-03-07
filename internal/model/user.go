@@ -1,5 +1,6 @@
 package model
 
+// User represents user table from the database
 type User struct {
 	BaseModel
 	FirstName    string

@@ -6,6 +6,7 @@ import (
 	"golang-project-layout/internal/model"
 )
 
+// Migrate20250301000000 performs migration logic for version 20250301000000
 func Migrate20250301000000(db *gorm.DB) error {
 	type User struct {
 		model.BaseModel
@@ -21,6 +22,7 @@ func Migrate20250301000000(db *gorm.DB) error {
 	return db.AutoMigrate(&User{})
 }
 
+// Rollback20250301000000 performs rollback logic for version 20250301000000
 func Rollback20250301000000(db *gorm.DB) error {
 	type User struct {
 		model.BaseModel

@@ -9,10 +9,12 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 )
 
+// Timeout provides the middleware for API timeout
 func Timeout() echo.MiddlewareFunc {
 	return middleware.TimeoutWithConfig(middleware.TimeoutConfig{Timeout: 60 * time.Second})
 }
 
+// Recover provides the middleware for server recovering from panic error
 func Recover() echo.MiddlewareFunc {
 	return middleware.RecoverWithConfig(middleware.RecoverConfig{
 		LogErrorFunc: func(e echo.Context, err error, stack []byte) error {
@@ -22,6 +24,7 @@ func Recover() echo.MiddlewareFunc {
 	})
 }
 
+// ErrorHandler provides custom error response when API encounters error
 func ErrorHandler(err error, e echo.Context) {
 	if e.Response().Committed {
 		return

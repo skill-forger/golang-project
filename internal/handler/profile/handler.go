@@ -10,11 +10,13 @@ import (
 	"golang-project-layout/server"
 )
 
+// handler represents the implementation of handler.Profile
 type handler struct {
 	route      string
 	profileSvc svc.Profile
 }
 
+// NewHandler returns a new implementation of handler.Profile
 func NewHandler(route string, profileSvc svc.Profile) hdl.Profile {
 	return &handler{
 		route:      route,
@@ -22,6 +24,7 @@ func NewHandler(route string, profileSvc svc.Profile) hdl.Profile {
 	}
 }
 
+// RegisterRoutes registers the handler routes and returns the server.HandlerRegistry
 func (h *handler) RegisterRoutes() server.HandlerRegistry {
 	return server.HandlerRegistry{
 		Route:           h.route,
