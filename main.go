@@ -1,7 +1,7 @@
 package main
 
 import (
-	"golang-project-layout/cmd"
+	"golang-project/cmd"
 )
 
 func main() {

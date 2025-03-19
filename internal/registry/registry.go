@@ -5,12 +5,12 @@ import (
 	swagger "github.com/swaggo/echo-swagger"
 	"gorm.io/gorm"
 
-	_ "golang-project-layout/docs/swagger"
-	"golang-project-layout/internal/handler"
-	"golang-project-layout/internal/registry/authentication"
-	"golang-project-layout/internal/registry/health"
-	"golang-project-layout/internal/registry/profile"
-	"golang-project-layout/server"
+	_ "golang-project/docs/swagger"
+	"golang-project/internal/handler"
+	"golang-project/internal/registry/authentication"
+	"golang-project/internal/registry/health"
+	"golang-project/internal/registry/profile"
+	"golang-project/server"
 )
 
 // NewHandlerRegistries returns all server handler registries

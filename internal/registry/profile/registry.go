@@ -3,10 +3,10 @@ package profile
 import (
 	"gorm.io/gorm"
 
-	"golang-project-layout/internal/handler"
-	hdl "golang-project-layout/internal/handler/profile"
-	repo "golang-project-layout/internal/repository/user"
-	svc "golang-project-layout/internal/service/profile"
+	"golang-project/internal/handler"
+	hdl "golang-project/internal/handler/profile"
+	repo "golang-project/internal/repository/user"
+	svc "golang-project/internal/service/profile"
 )
 
 // NewRegistry returns new resource handler for profile API

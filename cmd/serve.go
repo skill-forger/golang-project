@@ -13,10 +13,10 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
-	"golang-project-layout/internal/middleware"
-	"golang-project-layout/internal/registry"
-	"golang-project-layout/server"
-	"golang-project-layout/static"
+	"golang-project/internal/middleware"
+	"golang-project/internal/registry"
+	"golang-project/server"
+	"golang-project/static"
 )
 
 // serveCmd represents the serve command in Cobra Command structure

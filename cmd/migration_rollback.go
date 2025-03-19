@@ -3,8 +3,8 @@ package cmd
 import (
 	"log"
 
-	"golang-project-layout/migrations/data"
-	"golang-project-layout/migrations/schema"
+	"golang-project/migrations/data"
+	"golang-project/migrations/schema"
 
 	"github.com/spf13/cobra"
 )

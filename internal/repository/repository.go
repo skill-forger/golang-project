@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"golang-project-layout/internal/model"
+	"golang-project/internal/model"
 )
 
 // User represents the repository actions to the user table

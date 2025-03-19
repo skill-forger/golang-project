@@ -3,9 +3,9 @@ package authentication
 import (
 	"github.com/spf13/viper"
 
-	ct "golang-project-layout/internal/contract"
-	m "golang-project-layout/internal/model"
-	"golang-project-layout/static"
+	ct "golang-project/internal/contract"
+	m "golang-project/internal/model"
+	"golang-project/static"
 )
 
 // prepareSignInResponse transforms the data and returns the Sign In Response

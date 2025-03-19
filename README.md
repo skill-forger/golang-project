@@ -1,4 +1,4 @@
-# Golang Project Layout
+# Golang Project Template
 
 ## Specification
 - Init Project using Golang [Cobra](https://github.com/spf13/cobra)
@@ -19,8 +19,43 @@ go install github.com/swaggo/swag/cmd/swag@v1.16.4
 go install github.com/spf13/cobra-cli@latest
 ```
 
-# Project Layout
+# Directory Layout
 This project uses Monolithic Modular Architecture.
+```
+── cmd
+├── database
+├── deployment
+│   └── local
+│       └── data
+├── docs
+│   └── swagger
+├── internal
+│   ├── contract
+│   ├── handler
+│   │   ├── authentication
+│   │   ├── health
+│   │   └── profile
+│   ├── middleware
+│   ├── model
+│   ├── registry
+│   │   ├── authentication
+│   │   ├── health
+│   │   └── profile
+│   ├── repository
+│   │   └── user
+│   └── service
+│       ├── authentication
+│       └── profile
+├── migrations
+│   ├── data
+│   │   └── versions
+│   └── schema
+│       └── versions
+├── server
+├── static
+└── util
+    └── hashing
+```
 
 ## Swagger
 * Play url:

@@ -7,9 +7,9 @@ import (
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
 
-	ct "golang-project-layout/internal/contract"
-	hdl "golang-project-layout/internal/handler"
-	"golang-project-layout/server"
+	ct "golang-project/internal/contract"
+	hdl "golang-project/internal/handler"
+	"golang-project/server"
 )
 
 // handler represents the implementation of handler.ResourceHandler

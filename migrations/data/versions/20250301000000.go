@@ -3,8 +3,8 @@ package versions
 import (
 	"gorm.io/gorm"
 
-	"golang-project-layout/internal/model"
-	"golang-project-layout/util/hashing"
+	"golang-project/internal/model"
+	"golang-project/util/hashing"
 )
 
 // Migrate20250301000000 performs migration logic for version 20250301000000

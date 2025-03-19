@@ -3,8 +3,8 @@ package health
 import (
 	"gorm.io/gorm"
 
-	"golang-project-layout/internal/handler"
-	hdl "golang-project-layout/internal/handler/health"
+	"golang-project/internal/handler"
+	hdl "golang-project/internal/handler/health"
 )
 
 // NewRegistry returns new resource handler for health API

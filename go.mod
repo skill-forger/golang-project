@@ -1,4 +1,4 @@
-module golang-project-layout
+module golang-project
 
 go 1.23.0
 

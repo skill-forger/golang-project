@@ -7,12 +7,12 @@ import (
 	"github.com/google/uuid"
 	"github.com/spf13/viper"
 
-	ct "golang-project-layout/internal/contract"
-	"golang-project-layout/internal/model"
-	repo "golang-project-layout/internal/repository"
-	svc "golang-project-layout/internal/service"
-	"golang-project-layout/static"
-	"golang-project-layout/util/hashing"
+	ct "golang-project/internal/contract"
+	"golang-project/internal/model"
+	repo "golang-project/internal/repository"
+	svc "golang-project/internal/service"
+	"golang-project/static"
+	"golang-project/util/hashing"
 )
 
 // service represents the implementation of service.Authentication

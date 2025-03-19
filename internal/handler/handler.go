@@ -5,8 +5,8 @@ import (
 
 	"github.com/labstack/echo/v4"
 
-	ct "golang-project-layout/internal/contract"
-	"golang-project-layout/server"
+	ct "golang-project/internal/contract"
+	"golang-project/server"
 )
 
 // ResourceHandler             represents all API resource handler

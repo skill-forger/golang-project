@@ -10,9 +10,9 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/spf13/viper"
 
-	ct "golang-project-layout/internal/contract"
-	"golang-project-layout/server"
-	"golang-project-layout/static"
+	ct "golang-project/internal/contract"
+	"golang-project/server"
+	"golang-project/static"
 )
 
 // Authentication provides the middleware for any API requires user authentication

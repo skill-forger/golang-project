@@ -6,8 +6,8 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
-	"golang-project-layout/database"
-	"golang-project-layout/static"
+	"golang-project/database"
+	"golang-project/static"
 )
 
 // migrationCmd represents the migration command in Cobra Command structure

@@ -4,7 +4,7 @@ import (
 	"github.com/go-gormigrate/gormigrate/v2"
 	"gorm.io/gorm"
 
-	"golang-project-layout/migrations/data/versions"
+	"golang-project/migrations/data/versions"
 )
 
 // NewMigration returns new gorm data migration instance

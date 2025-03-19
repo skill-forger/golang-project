@@ -4,7 +4,7 @@ import (
 	"github.com/go-gormigrate/gormigrate/v2"
 	"gorm.io/gorm"
 
-	"golang-project-layout/migrations/schema/versions"
+	"golang-project/migrations/schema/versions"
 )
 
 // NewMigration returns new gorm schema migration instance

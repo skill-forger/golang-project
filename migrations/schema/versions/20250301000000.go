@@ -3,7 +3,7 @@ package versions
 import (
 	"gorm.io/gorm"
 
-	"golang-project-layout/internal/model"
+	"golang-project/internal/model"
 )
 
 // Migrate20250301000000 performs migration logic for version 20250301000000

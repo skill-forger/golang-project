@@ -5,10 +5,10 @@ import (
 
 	"github.com/labstack/echo/v4"
 
-	ct "golang-project-layout/internal/contract"
-	hdl "golang-project-layout/internal/handler"
-	svc "golang-project-layout/internal/service"
-	"golang-project-layout/server"
+	ct "golang-project/internal/contract"
+	hdl "golang-project/internal/handler"
+	svc "golang-project/internal/service"
+	"golang-project/server"
 )
 
 // handler represents the implementation of handler.Authentication

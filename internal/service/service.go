@@ -1,7 +1,7 @@
 package service
 
 import (
-	ct "golang-project-layout/internal/contract"
+	ct "golang-project/internal/contract"
 )
 
 // Authentication represents the service logic of Authentication
