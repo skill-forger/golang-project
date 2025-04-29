@@ -1,12 +1,12 @@
 package contract
 
 import (
-	"github.com/golang-jwt/jwt"
+	"github.com/golang-jwt/jwt/v5"
 )
 
 // CustomClaim represents the authentication custom claim payload
 type CustomClaim struct {
-	jwt.StandardClaims
+	jwt.RegisteredClaims
 	UserID    int    `json:"user_id,omitempty"`
 	UserEmail string `json:"user_email,omitempty"`
 }

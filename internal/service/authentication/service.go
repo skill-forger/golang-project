@@ -3,7 +3,7 @@ package authentication
 import (
 	"time"
 
-	"github.com/golang-jwt/jwt"
+	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
 	"github.com/spf13/viper"
 
@@ -53,13 +53,13 @@ func (s *service) SignIn(r *ct.SignInRequest) (*ct.SignInResponse, error) {
 func (s *service) generateToken(user *model.User) (string, error) {
 	secret := []byte(viper.GetString(static.EnvAuthSecret))
 	customClaim := &ct.CustomClaim{
-		StandardClaims: jwt.StandardClaims{
-			Audience:  viper.GetString(static.EnvAuthAudience),
-			ExpiresAt: time.Now().Unix() + viper.GetInt64(static.EnvAuthLifeTime),
-			Id:        uuid.NewString(),
-			IssuedAt:  time.Now().Unix(),
+		RegisteredClaims: jwt.RegisteredClaims{
+			Audience:  []string{viper.GetString(static.EnvAuthAudience)},
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Duration(viper.GetInt64(static.EnvAuthLifeTime)) * time.Second)),
+			ID:        uuid.NewString(),
+			IssuedAt:  jwt.NewNumericDate(time.Now()),
 			Issuer:    viper.GetString(static.EnvAuthIssuer),
-			NotBefore: time.Now().Unix(),
+			NotBefore: jwt.NewNumericDate(time.Now()),
 			Subject:   viper.GetString(static.EnvAuthSubject),
 		},
 		UserID:    user.ID,
