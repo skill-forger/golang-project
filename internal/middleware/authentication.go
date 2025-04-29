@@ -1,9 +1,7 @@
 package middleware
 
 import (
-	"fmt"
 	"net/http"
-	"strings"
 
 	"github.com/golang-jwt/jwt"
 	echoJwt "github.com/labstack/echo-jwt/v4"
@@ -11,18 +9,13 @@ import (
 	"github.com/spf13/viper"
 
 	ct "golang-project/internal/contract"
-	"golang-project/server"
 	"golang-project/static"
 )
 
 // Authentication provides the middleware for any API requires user authentication
-func Authentication(registries []server.HandlerRegistry) echo.MiddlewareFunc {
-	pathSkipper := mapPathSkipper(registries)
-
+func Authentication() echo.MiddlewareFunc {
 	return echoJwt.WithConfig(echoJwt.Config{
-		Skipper: func(c echo.Context) bool {
-			return pathSkipper[getRouteGroup(c.Request().URL.Path)]
-		},
+		Skipper:       func(c echo.Context) bool { return false },
 		SigningKey:    []byte(viper.GetString(static.EnvAuthSecret)),
 		SigningMethod: echoJwt.AlgorithmHS256,
 		ParseTokenFunc: func(c echo.Context, auth string) (interface{}, error) {
@@ -43,26 +36,4 @@ func Authentication(registries []server.HandlerRegistry) echo.MiddlewareFunc {
 			return &ct.ContextUser{ID: claim.UserID, Email: claim.UserEmail}, nil
 		},
 	})
-}
-
-func mapPathSkipper(registries []server.HandlerRegistry) map[string]bool {
-	result := map[string]bool{"/": true, "/favicon.ico": true}
-
-	for _, r := range registries {
-		if r.IsAuthenticated {
-			continue
-		}
-		result[r.Route] = true
-	}
-
-	return result
-}
-
-func getRouteGroup(path string) string {
-	paths := strings.Split(path, "/")
-	if len(paths) < 2 {
-		return ""
-	}
-
-	return fmt.Sprintf("/%s", paths[1])
 }

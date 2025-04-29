@@ -61,7 +61,6 @@ func runServeCmd(cmd *cobra.Command, args []string) {
 				middleware.Recover(),
 				middleware.Timeout(),
 				middleware.Correlation(),
-				middleware.Authentication(handlerRegistries),
 			)
 		},
 	}

@@ -6,6 +6,7 @@ import (
 	"github.com/labstack/echo/v4"
 
 	hdl "golang-project/internal/handler"
+	"golang-project/internal/middleware"
 	svc "golang-project/internal/service"
 	"golang-project/server"
 )
@@ -27,10 +28,9 @@ func NewHandler(route string, profileSvc svc.Profile) hdl.Profile {
 // RegisterRoutes registers the handler routes and returns the server.HandlerRegistry
 func (h *handler) RegisterRoutes() server.HandlerRegistry {
 	return server.HandlerRegistry{
-		Route:           h.route,
-		IsAuthenticated: true,
+		Route: h.route,
 		Register: func(group *echo.Group) {
-			group.GET("", h.Get)
+			group.GET("", h.Get, middleware.Authentication())
 		},
 	}
 }
